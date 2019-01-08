@@ -1,0 +1,17 @@
+.container{   
+    display: flex;
+    padding: 10px;
+    /* justify-content: flex-start; */
+    /* align-items: space-between; */
+    justify-content: center;    
+    flex-direction: row;
+    max-width: 100%;
+    flex-wrap: wrap;    
+}
+
+.livrosArea{
+    display: flex;
+    max-height: 300px;
+    align-items:flex-start;
+    overflow: hidden;   
+}

@@ -1,27 +1,85 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, { Component, PureComponent  } from 'react';
 import './App.css';
+import * as firebase from 'firebase';
+import Livros from './components/Livros';
+import logo from './LOGO.png';
 
 class App extends Component {
+  
+  _allBooks = [];
+
+  constructor(){
+    super();
+    this.state = {
+      livros:[],
+      pesquisa:""
+    }
+  }
+
+  componentDidMount(){
+    const rootRef = firebase.database().ref();
+    const bookRef = rootRef.child('Livros');
+    bookRef.on('value', snap =>{
+      let livros = snap.val();
+      let livrosArray = [];
+      for(let livro of livros){
+        if(livro){
+          livrosArray.push(livro);        
+        }
+      }
+      this._allBooks = livrosArray; 
+      this.setState({
+        livros: livrosArray
+      })
+    });
+    
+  }
+
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <span><img src={logo} height='72px' width='72px' /></span>
+          <span className='pesquisa'>
+            <input type="text" name="firstname" value={this.state['pesquisa']} placeholder="Pesquisar..." onChange={(a)=>this.pesquisaChange(a.target.value)}/>
+          </span>
+          <span>
+            <span>CONTATO</span>
+          </span>
+          
         </header>
+        <body className="App-body">
+          <Livros livros={this.state['livros']}/>
+        </body>
       </div>
     );
+  }
+
+  
+  pesquisaChange(text){
+    let foundBooks = this._allBooks.filter(
+      (t) => this.removeAcento(t['titulo'].toLowerCase())
+      .includes(this.removeAcento(text.toLowerCase())) ||
+      this.removeAcento(t['autor'].toLowerCase())
+      .includes(this.removeAcento(text.toLowerCase()))
+    );
+
+    this.setState({
+      pesquisa:text,
+      livros: foundBooks
+    });
+  }
+
+  removeAcento(text){       
+    text = text.toLowerCase();                                                         
+    text = text.replace(new RegExp('[ÁÀÂÃ]','gi'), 'a');
+    text = text.replace(new RegExp('[ÉÈÊ]','gi'), 'e');
+    text = text.replace(new RegExp('[ÍÌÎ]','gi'), 'i');
+    text = text.replace(new RegExp('[ÓÒÔÕ]','gi'), 'o');
+    text = text.replace(new RegExp('[ÚÙÛ]','gi'), 'u');
+    text = text.replace(new RegExp('[Ç]','gi'), 'c');
+    return text;                 
   }
 }
 

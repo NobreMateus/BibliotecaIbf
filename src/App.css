@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -7,13 +8,43 @@
   height: 40vmin;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App-header{
+  background-color: #353535;
+  min-height: 10vh;
+  width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+}
+
+.App-header span{
+  color: white;
+  flex-grow: 1;
+}
+
+.pesquisa{
+  flex-grow: 2 !important;
+}
+
+.pesquisa input{
+  outline: none;
+  width: 100%;
+  height: 30px;
+  border-radius: 20px;
+  border: none;
+  padding: 5px;
+  padding-left: 25px;
+  font-size: 16px;
+}
+
+.App-body {
+  background-color: #fffcf0;
+  min-height: 85vh;
+  display: flex;
+  flex-direction: row;
+  padding-top: 5vh; 
+  /* align-items: center; */
+  /* justify-content: center; */
   font-size: calc(10px + 2vmin);
   color: white;
 }

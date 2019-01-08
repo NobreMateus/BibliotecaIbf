@@ -3,6 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import * as firebase from 'firebase';
+
+var config = {
+    apiKey: "AIzaSyCrScdVYTLzwnprFc8C6-JYeq70PCBqbVQ",
+    authDomain: "biblioteca-ibf.firebaseapp.com",
+    databaseURL: "https://biblioteca-ibf.firebaseio.com",
+    projectId: "biblioteca-ibf",
+    storageBucket: "biblioteca-ibf.appspot.com",
+    messagingSenderId: "156517160632"
+};
+
+firebase.initializeApp(config);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
