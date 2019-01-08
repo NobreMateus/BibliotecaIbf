@@ -3,6 +3,7 @@ import './App.css';
 import * as firebase from 'firebase';
 import Livros from './components/Livros';
 import logo from './LOGO.png';
+import axios from 'axios';
 
 class App extends Component {
   
@@ -22,11 +23,11 @@ class App extends Component {
     bookRef.on('value', snap =>{
       let livros = snap.val();
       let livrosArray = [];
-      for(let livro of livros){
+      for(let livro in livros){
         if(livro){
-          livrosArray.push(livro);        
+          livrosArray.push(livros[livro]);        
         }
-      }
+      } 
       this._allBooks = livrosArray; 
       this.setState({
         livros: livrosArray
@@ -49,20 +50,21 @@ class App extends Component {
           </span>
           
         </header>
-        <body className="App-body">
+        <div className="App-body">
           <Livros livros={this.state['livros']}/>
-        </body>
+        </div>
       </div>
     );
   }
 
   
   pesquisaChange(text){
+
     let foundBooks = this._allBooks.filter(
       (t) => this.removeAcento(t['titulo'].toLowerCase())
-      .includes(this.removeAcento(text.toLowerCase())) ||
-      this.removeAcento(t['autor'].toLowerCase())
-      .includes(this.removeAcento(text.toLowerCase()))
+      .includes(this.removeAcento(text.toLowerCase())) //||
+      // this.removeAcento(t['autor'].toLowerCase())
+      // .includes(this.removeAcento(text.toLowerCase()))
     );
 
     this.setState({

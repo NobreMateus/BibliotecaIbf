@@ -10,7 +10,7 @@ export default class Livros extends Component {
                 {this.props.livros.map((livro, key) => {
                     return (
                         <div key={key} className='livrosArea'>
-                            <Livro title={livro['titulo']} autor={livro['autor']} editora={livro['editora']} />
+                            <Livro title={livro['titulo']} autor={livro['autor']} editora={livro['editora']} imgURL={livro['imgURL']}/>
                         </div>
                     )
                 })}

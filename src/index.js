@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import AddBook from './AddBook'
 import * as serviceWorker from './serviceWorker';
 import * as firebase from 'firebase';
 
