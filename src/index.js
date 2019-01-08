@@ -5,6 +5,8 @@ import App from './App';
 import AddBook from './AddBook'
 import * as serviceWorker from './serviceWorker';
 import * as firebase from 'firebase';
+// import {Router, Switch, Route} from 'react-router';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 var config = {
     apiKey: "AIzaSyCrScdVYTLzwnprFc8C6-JYeq70PCBqbVQ",
@@ -17,7 +19,15 @@ var config = {
 
 firebase.initializeApp(config);
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Router>
+        <div>
+            <Route exact path="/" component={App}/>
+            <Route path="/adiciona" component={AddBook}/>
+            {/* <Route component={App}/> */}
+        </div>
+    </ Router>,
+document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

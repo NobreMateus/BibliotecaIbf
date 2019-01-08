@@ -1,9 +1,11 @@
-import React, { Component, PureComponent  } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import * as firebase from 'firebase';
 import Livros from './components/Livros';
 import logo from './LOGO.png';
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
+import { Modal } from './Modal';
 
 class App extends Component {
   
@@ -38,6 +40,16 @@ class App extends Component {
 
 
   render() {
+
+    const modal = this.state.showModal ? (
+      <Modal>
+        <div className="modal">
+          <div>Olá, eu sou um modal!</div>
+          <button onClick={this.escondeModal}>Hide modal</button>
+        </div>
+      </Modal>
+    ) : null;
+
     return (
       <div className="App">
         <header className="App-header">
@@ -46,9 +58,9 @@ class App extends Component {
             <input type="text" name="firstname" value={this.state['pesquisa']} placeholder="Pesquisar..." onChange={(a)=>this.pesquisaChange(a.target.value)}/>
           </span>
           <span>
-            <span>CONTATO</span>
+            <NavLink to="/adiciona" className={"App-link"}>ADICIONAR LIVROS</NavLink>
           </span>
-          
+
         </header>
         <div className="App-body">
           <Livros livros={this.state['livros']}/>

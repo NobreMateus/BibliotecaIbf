@@ -4,9 +4,13 @@ import * as firebase from 'firebase';
 import Livros from './components/Livros';
 import axios from 'axios';
 import Livro from './Livro';
+import './components/css/add-style.css';
 
 class AddBook extends Component {
   _found = true;
+  _btnActive=true;
+  _showInfo=false;
+
   constructor(){
     super();
     this.state = {
@@ -15,7 +19,9 @@ class AddBook extends Component {
       title:'',
       description:'',
       authors:'',
-      imgURL:''
+      imgURL:'',
+
+      info:''
     }
   }
 
@@ -40,35 +46,73 @@ class AddBook extends Component {
                 isbn:isbn,
                 title:'',
                 description:'',
-                authors:''
+                authors:'',
+                imgURL: '',
+                info: "ISBN não encontrado!"
             })
-            this._found=false;
+            this._showInfo=true;
         }
+    }).catch(()=>{
+      console.log('Não Encontrado');
+      this.setState({
+          isbn:'',
+          title:'',
+          description:'',
+          authors:'',
+          imgURL: '',
+          info: "ISBN não encontrado!"
+      })
+      this._showInfo=true;
     });
   }
 
   render() {
     let livroInfo = this.state['livro'];
     return(
-    <div>
+    <div className={"add-container"}>
+      <div className="form-container">
+        
+        {this._showInfo?
+        <div className="info-box">{this.state['info']}</div>
+        :<div></div>}
 
-      ISBN: <input type="text" name="firstname" value={this.state['isbn']} placeholder="Pesquisar..." onChange={(a)=>this.isbnChange(a.target.value)}/>
-      <button onClick={a=>this.getData(this.state['isbn'].replace(/-/g,''))} >CLICK TO DATA</button><br />
-      Título: <input type="text" value={this.state['title']} onChange={(a)=>this.titleChange(a.target.value)}/><br />
-      Autores: <input type="text" value={this.state['authors']} onChange={(a)=>this.authorsChange(a.target.value)}/><br />
-      Descrição: <input type="text" value={this.state['description']} onChange={(a)=>this.titleChange(a.target.value)}/><br />
-      URL Imagem: <input type="text" value={this.state['imgURL']} onChange={(a)=>this.imgURLChange(a.target.value)}/><br />
-      <img src={this.state['imgURL']} /> 
-      {!this._found?<span>Não Encontrado!</span>:<span></span>}<br />
+        <span className="input-label">ISBN:</span>
+        <input className="input-text" type="text" name="firstname" value={this.state['isbn']} placeholder="Pesquisar..." onChange={(a)=>this.isbnChange(a.target.value)}/>
+        <button className="botao" onClick={a=>this.getData(this.state['isbn'].replace(/-/g,''))} >CLICK TO DATA</button>
+        <span className="input-label">Título:</span>
+        <input className="input-text" type="text" value={this.state['title']} onChange={(a)=>this.titleChange(a.target.value)}/>
+        <span className="input-label">Autores:</span>
+        <input className="input-text" type="text" value={this.state['authors']} onChange={(a)=>this.authorsChange(a.target.value)}/>
+        <span className="input-label">Descrição:</span>
+        <textarea className="textarea-text" rows="5" cols="70" value={this.state['description']} onChange={(a)=>this.titleChange(a.target.value)}></textarea><br/>
+        <span className="input-label">URL Imagem:</span>
+        <input className="input-text" type="text" value={this.state['imgURL']} onChange={(a)=>this.imgURLChange(a.target.value)}/>
+        <img className="img-capa" src={this.state['imgURL']} /> 
+        
+        {!this._found?<span>Não Encontrado!</span>:<span></span>}
 
-      <button onClick={a=>this.saveFirebase()} >ADICIONAR AO FIREBASE</button><br />
+        <button disabled={!this._btnActive} className="botao" onClick={a=>this.saveFirebase()} >ADICIONAR AO FIREBASE</button>
+      </div>
     </div>
 
     )
   }
 
+  succesSave(){
+    this._showInfo=true;
+    this._btnActive=true;
+    this.setState({
+      isbn:'',
+      title:'',
+      description:'',
+      authors:'',
+      imgURL: '',
+      info:"Livro adicionado com sucesso!"
+    })
+  }
 
   saveFirebase(){
+    this._btnActive=false;
     let livro = this.state;
     const rootRef = firebase.database().ref();
     const bookRef = rootRef. child('Livros').update({
@@ -79,8 +123,7 @@ class AddBook extends Component {
             imgURL: livro['imgURL'],
             quantidade: 1
         }
-    }, ()=>console.log('Funcionou'))
-    .then(t=>console.log(t));
+    }, ()=>this.succesSave());
   }
   
   isbnChange(text){
