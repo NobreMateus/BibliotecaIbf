@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import * as firebase from 'firebase';
-import Livros from './components/Livros';
 import axios from 'axios';
 import Livro from './Livro';
 import './components/css/add-style.css';
@@ -67,7 +66,6 @@ class AddBook extends Component {
   }
 
   render() {
-    let livroInfo = this.state['livro'];
     return(
     <div className={"add-container"}>
       <div className="form-container">
@@ -87,7 +85,7 @@ class AddBook extends Component {
         <textarea className="textarea-text" rows="5" cols="70" value={this.state['description']} onChange={(a)=>this.titleChange(a.target.value)}></textarea><br/>
         <span className="input-label">URL Imagem:</span>
         <input className="input-text" type="text" value={this.state['imgURL']} onChange={(a)=>this.imgURLChange(a.target.value)}/>
-        <img className="img-capa" src={this.state['imgURL']} /> 
+        <img className="img-capa" alt="capa" src={this.state['imgURL']} /> 
         
         {!this._found?<span>Não Encontrado!</span>:<span></span>}
 
@@ -115,7 +113,7 @@ class AddBook extends Component {
     this._btnActive=false;
     let livro = this.state;
     const rootRef = firebase.database().ref();
-    const bookRef = rootRef. child('Livros').update({
+    rootRef.child('Livros').update({
          [livro['isbn']]:{
             titulo:livro['title'],
             autor: livro['authors'],

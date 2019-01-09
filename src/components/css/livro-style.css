@@ -1,8 +1,9 @@
 .containerLivro{
-    width: 18vw;
+    /* width: 18vw; */
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 
@@ -14,12 +15,12 @@
 }
 
 .title{
-    font-size: 2.5vh;
+    font-size: 18px;
     color: #353535;
 }
 
 .autor{
     margin-top: 3px;
-    font-size: 2vh;
+    font-size: 14px;
     color: #353535;
 }
