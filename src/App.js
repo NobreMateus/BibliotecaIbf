@@ -46,7 +46,6 @@ class App extends Component {
   
 
   render() {
-    //console.log(this._allBooks.slice(0,this.state['qLivros']))
     return (
       <div className="App">
 
@@ -56,7 +55,7 @@ class App extends Component {
             <input type="text" name="firstname" value={this.state['pesquisa']} placeholder="Pesquisar..." onChange={(a)=>this.pesquisaChange(a.target.value)}/>
           </span>
           <span>
-            <NavLink to="/adiciona" className={"App-link"}>CONTATO</NavLink>
+            <NavLink to="/contato" className={"App-link"}>CONTATO</NavLink>
           </span>
 
         </header>

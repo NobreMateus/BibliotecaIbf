@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import AddBook from './AddBook'
+import AddBook from './AddBook';
+import Contato from './components/Contato';
 import * as serviceWorker from './serviceWorker';
 import * as firebase from 'firebase';
 // import {Router, Switch, Route} from 'react-router';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+
 
 var config = {
     apiKey: "AIzaSyCrScdVYTLzwnprFc8C6-JYeq70PCBqbVQ",
@@ -24,6 +27,7 @@ ReactDOM.render(
         <div>
             <Route exact path="/" component={App}/>
             <Route path="/adiciona" component={AddBook}/>
+            <Route path="/contato" component={Contato}/>
             {/* <Route component={App}/> */}
         </div>
     </ Router>,

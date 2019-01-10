@@ -21,7 +21,7 @@ export default class Livro extends Component{
         let livro = this.props.livro;
 
         let modal=(
-            <Dialog props={this.props} isOpen={true} onClose={()=>this.closeModal()} />
+            <Dialog props={livro} isOpen={true} onClose={()=>this.closeModal()} />
         )
 
         return (
@@ -32,8 +32,7 @@ export default class Livro extends Component{
                         <img src={livro.imgURL} alt="capa" height='218px' width= '160px'/>
                     </div>
                     <div>
-                        <div className='title'>{livro.title}</div>
-                        <div className='autor'>{livro.autor[0]}</div>
+                        <div className='title'>{livro.titulo}</div>
                     </div>
                 </div>
             </div>
