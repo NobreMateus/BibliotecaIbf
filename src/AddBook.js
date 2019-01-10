@@ -18,6 +18,8 @@ class AddBook extends Component {
       title:'',
       description:'',
       authors:'',
+      editora:'',
+      quantidade:1,
       imgURL:'',
 
       info:''
@@ -30,13 +32,14 @@ class AddBook extends Component {
         this._found=true;
         let livroInfo = l.data.items[0].volumeInfo;
         let imgCapa = livroInfo['imageLinks']?livroInfo['imageLinks']['thumbnail']:"https://firebasestorage.googleapis.com/v0/b/biblioteca-ibf.appspot.com/o/capas%2Fsem-capa.jpg?alt=media&token=824f09d0-39fa-4ac3-9b2c-fd69d864457b";
-        let livro = new Livro(isbn, livroInfo['title'], livroInfo['authors'], livroInfo['description'], imgCapa);
+        let livro = new Livro(isbn, livroInfo['title'], livroInfo['authors'], livroInfo['description'], imgCapa, livroInfo['publisher'], livroInfo['quantidade']);
         console.log(livro);
         this.setState({
             isbn:isbn,
             title: livroInfo['title'],
             description: livroInfo['description'],
             authors:livroInfo['authors'],
+            editora:livroInfo['publisher'],
             imgURL: imgCapa
         })
         }else{
@@ -46,6 +49,7 @@ class AddBook extends Component {
                 title:'',
                 description:'',
                 authors:'',
+                editora:'',
                 imgURL: '',
                 info: "ISBN não encontrado!"
             })
@@ -82,7 +86,11 @@ class AddBook extends Component {
         <span className="input-label">Autores:</span>
         <input className="input-text" type="text" value={this.state['authors']} onChange={(a)=>this.authorsChange(a.target.value)}/>
         <span className="input-label">Descrição:</span>
-        <textarea className="textarea-text" rows="5" cols="70" value={this.state['description']} onChange={(a)=>this.titleChange(a.target.value)}></textarea><br/>
+        <textarea className="textarea-text" rows="5" cols="70" value={this.state['description']} onChange={(a)=>this.descriptionChange(a.target.value)}></textarea><br/>
+        <span className="input-label">Editora:</span>
+        <input className="input-text" type="text" value={this.state['editora']} onChange={(a)=>this.editoraChange(a.target.value)}/>
+        <span className="input-label">Quantidade:</span>
+        <input className="input-text" type="number" value={this.state['quantidade']} onChange={(a)=>this.quantidadeChange(a.target.value)}/>
         <span className="input-label">URL Imagem:</span>
         <input className="input-text" type="text" value={this.state['imgURL']} onChange={(a)=>this.imgURLChange(a.target.value)}/>
         <img className="img-capa" alt="capa" src={this.state['imgURL']} /> 
@@ -104,6 +112,7 @@ class AddBook extends Component {
       title:'',
       description:'',
       authors:'',
+      editora:'',
       imgURL: '',
       info:"Livro adicionado com sucesso!"
     })
@@ -112,14 +121,17 @@ class AddBook extends Component {
   saveFirebase(){
     this._btnActive=false;
     let livro = this.state;
+    console.log(livro);
+    
     const rootRef = firebase.database().ref();
     rootRef.child('Livros').update({
          [livro['isbn']]:{
-            titulo:livro['title'],
-            autor: livro['authors'],
-            descricao: livro['description'],
-            imgURL: livro['imgURL'],
-            quantidade: 1
+            titulo:livro['title']?livro['title']:'',
+            autor: livro['authors']?livro['authors']:'',
+            descricao: livro['description']?livro['description']:'',
+            editora: livro['editora']?livro['editora']:'',
+            imgURL: livro['imgURL']?livro['imgURL']:'',
+            quantidade: this.state['quantidade']?livro['quantidade']:1
         }
     }, ()=>this.succesSave());
   }
@@ -136,9 +148,21 @@ class AddBook extends Component {
     });  
   }
 
-  authorChange(text){
+  authorsChange(text){
     this.setState({
         author:text
+    });  
+  }
+
+  editoraChange(text){
+    this.setState({
+        editora:text
+    });  
+  }
+
+  quantidadeChange(text){
+    this.setState({
+        quantidade:text
     });  
   }
 

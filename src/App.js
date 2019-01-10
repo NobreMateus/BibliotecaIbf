@@ -56,7 +56,7 @@ class App extends Component {
             <input type="text" name="firstname" value={this.state['pesquisa']} placeholder="Pesquisar..." onChange={(a)=>this.pesquisaChange(a.target.value)}/>
           </span>
           <span>
-            <NavLink to="/adiciona" className={"App-link"}>ADICIONAR LIVROS</NavLink>
+            <NavLink to="/adiciona" className={"App-link"}>CONTATO</NavLink>
           </span>
 
         </header>
