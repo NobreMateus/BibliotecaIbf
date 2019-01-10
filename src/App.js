@@ -74,7 +74,7 @@ class App extends Component {
   }
   
   pesquisaChange(text){
-
+    console.log(text);
     let foundBooks = this._allBooks.filter(
       (t) => this.removeAcento(t['titulo'].toLowerCase())
       .includes(this.removeAcento(text.toLowerCase())) ||
