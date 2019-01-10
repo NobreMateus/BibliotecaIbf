@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import Livros from './components/Livros';
 import logo from './LOGO.png';
 import { NavLink } from 'react-router-dom';
+import Dialog from './components/Dialog';
 
 class App extends Component {
   
@@ -45,16 +46,16 @@ class App extends Component {
   
 
   render() {
-    //console.log(this._allBooks.slice(0,this.state['qLivros']))
     return (
       <div className="App">
+
         <header className="App-header">
           <span><img src={logo} alt="logo" height='72px' width='72px' /></span>
           <span className='pesquisa'>
             <input type="text" name="firstname" value={this.state['pesquisa']} placeholder="Pesquisar..." onChange={(a)=>this.pesquisaChange(a.target.value)}/>
           </span>
           <span>
-            <NavLink to="/adiciona" className={"App-link"}>CONTATO</NavLink>
+            <NavLink to="/contato" className={"App-link"}>CONTATO</NavLink>
           </span>
 
         </header>
