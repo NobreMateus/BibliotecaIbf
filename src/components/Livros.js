@@ -5,12 +5,13 @@ import Livro from './Livro';
 export default class Livros extends Component {
 
     render() {
+        console.log(this.props.livros)  ;
         return (
             <div className='container'>
                 {this.props.livros.map((livro, key) => {
                     return (
                         <div key={key} className='livrosArea'>
-                            <Livro title={livro['titulo']} autor={livro['autor']} editora={livro['editora']} imgURL={livro['imgURL']}/>
+                            <Livro livro={livro} />
                         </div>
                     )
                 })}
