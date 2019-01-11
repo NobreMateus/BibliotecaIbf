@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import * as firebase from 'firebase';
 import axios from 'axios';
-import Livro from './Livro';
 import './components/css/add-style.css';
 
 class AddBook extends Component {
@@ -19,6 +18,7 @@ class AddBook extends Component {
       description:'',
       authors:'',
       editora:'',
+      paginas:0,
       quantidade:1,
       imgURL:'',
 
@@ -26,19 +26,18 @@ class AddBook extends Component {
     }
   }
 
+
   getData(isbn){
     axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`).then(l=>{
       if(l['data']['totalItems']>0){
         this._found=true;
         let livroInfo = l.data.items[0].volumeInfo;
         let imgCapa = livroInfo['imageLinks']?livroInfo['imageLinks']['thumbnail']:"https://firebasestorage.googleapis.com/v0/b/biblioteca-ibf.appspot.com/o/capas%2Fsem-capa.jpg?alt=media&token=824f09d0-39fa-4ac3-9b2c-fd69d864457b";
-        let livro = new Livro(isbn, livroInfo['title'], livroInfo['authors'], livroInfo['description'], imgCapa, livroInfo['publisher'], livroInfo['quantidade']);
-        console.log(livro);
         this.setState({
             isbn:isbn,
             title: livroInfo['title'],
             description: livroInfo['description'],
-            authors:livroInfo['authors'],
+            authors:livroInfo['authors'].join(", "),
             editora:livroInfo['publisher'],
             imgURL: imgCapa
         })
@@ -49,7 +48,7 @@ class AddBook extends Component {
                 title:'',
                 description:'',
                 authors:'',
-                editora:'',
+                paginas:0,
                 imgURL: '',
                 info: "ISBN não encontrado!"
             })
@@ -62,6 +61,7 @@ class AddBook extends Component {
           title:'',
           description:'',
           authors:'',
+          paginas:0,
           imgURL: '',
           info: "ISBN não encontrado!"
       })
@@ -78,21 +78,23 @@ class AddBook extends Component {
         <div className="info-box">{this.state['info']}</div>
         :<div></div>}
 
-        <span className="input-label">ISBN:</span>
-        <input className="input-text" type="text" name="firstname" value={this.state['isbn']} placeholder="Pesquisar..." onChange={(a)=>this.isbnChange(a.target.value)}/>
+        <span className="input-label2">ISBN:</span>
+        <input className="input-text2" type="text" name="firstname" value={this.state['isbn']} placeholder="Pesquisar..." onChange={(a)=>this.isbnChange(a.target.value)}/>
         <button className="botao" onClick={a=>this.getData(this.state['isbn'].replace(/-/g,''))} >CLICK TO DATA</button>
-        <span className="input-label">Título:</span>
-        <input className="input-text" type="text" value={this.state['title']} onChange={(a)=>this.titleChange(a.target.value)}/>
-        <span className="input-label">Autores:</span>
-        <input className="input-text" type="text" value={this.state['authors']} onChange={(a)=>this.authorsChange(a.target.value)}/>
-        <span className="input-label">Descrição:</span>
-        <textarea className="textarea-text" rows="5" cols="70" value={this.state['description']} onChange={(a)=>this.descriptionChange(a.target.value)}></textarea><br/>
-        <span className="input-label">Editora:</span>
-        <input className="input-text" type="text" value={this.state['editora']} onChange={(a)=>this.editoraChange(a.target.value)}/>
-        <span className="input-label">Quantidade:</span>
-        <input className="input-text" type="number" value={this.state['quantidade']} onChange={(a)=>this.quantidadeChange(a.target.value)}/>
-        <span className="input-label">URL Imagem:</span>
-        <input className="input-text" type="text" value={this.state['imgURL']} onChange={(a)=>this.imgURLChange(a.target.value)}/>
+        <span className="input-label2">Título:</span>
+        <input className="input-text2" type="text" value={this.state['title']} onChange={(a)=>this.titleChange(a.target.value)}/>
+        <span className="input-label2">Autores:</span>
+        <input className="input-tex2" type="text" value={this.state['authors']} onChange={(a)=>this.authorsChange(a.target.value)}/>
+        <span className="input-labe2">Descrição:</span>
+        <textarea className="textarea-text2" rows="5" cols="70" value={this.state['description']} onChange={(a)=>this.descriptionChange(a.target.value)}></textarea><br/>
+        <span className="input-label2">Editora:</span>
+        <input className="input-text2" type="text" value={this.state['editora']} onChange={(a)=>this.editoraChange(a.target.value)}/>
+        <span className="input-label2">Quantidade:</span>
+        <input className="input-text2" type="number" value={this.state['quantidade']} onChange={(a)=>this.quantidadeChange(a.target.value)}/>
+        <span className="input-label2">Páginas:</span>
+        <input className="input-text2" type="number" value={this.state['paginas']} onChange={(a)=>this.paginasChange(a.target.value)}/>
+        <span className="input-label2">URL Imagem:</span>
+        <input className="input-text2" type="text" value={this.state['imgURL']} onChange={(a)=>this.imgURLChange(a.target.value)}/>
         <img className="img-capa" alt="capa" src={this.state['imgURL']} /> 
         
         {!this._found?<span>Não Encontrado!</span>:<span></span>}
@@ -112,7 +114,7 @@ class AddBook extends Component {
       title:'',
       description:'',
       authors:'',
-      editora:'',
+      paginas:0,
       imgURL: '',
       info:"Livro adicionado com sucesso!"
     })
@@ -131,7 +133,8 @@ class AddBook extends Component {
             descricao: livro['description']?livro['description']:'',
             editora: livro['editora']?livro['editora']:'',
             imgURL: livro['imgURL']?livro['imgURL']:'',
-            quantidade: this.state['quantidade']?livro['quantidade']:1
+            paginas: livro['paginas']?livro['paginas']:0,
+            quantidade: livro['quantidade']?livro['quantidade']:1
         }
     }, ()=>this.succesSave());
   }
@@ -144,13 +147,14 @@ class AddBook extends Component {
 
   titleChange(text){
     this.setState({
-        title:text
+        title:text.toLowerCase().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); })
     });  
   }
 
   authorsChange(text){
+    console.log(text);
     this.setState({
-        author:text
+        authors:text.toLowerCase().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); })
     });  
   }
 
@@ -169,6 +173,12 @@ class AddBook extends Component {
   descriptionChange(text){
     this.setState({
         description:text
+    });  
+  }
+
+  paginasChange(text){
+    this.setState({
+        paginas:text
     });  
   }
 

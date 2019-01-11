@@ -4,7 +4,6 @@ import * as firebase from 'firebase';
 import Livros from './components/Livros';
 import logo from './LOGO.png';
 import { NavLink } from 'react-router-dom';
-import Dialog from './components/Dialog';
 
 class App extends Component {
   
