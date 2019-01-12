@@ -5,7 +5,6 @@ import Livro from './Livro';
 export default class Livros extends Component {
 
     render() {
-        console.log(this.props.livros)  ;
         return (
             <div className='container'>
                 {this.props.livros.map((livro, key) => {

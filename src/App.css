@@ -79,7 +79,7 @@
   flex-direction: row;
   padding-top: 5vh; 
   /* align-items: center; */
-  /* justify-content: center; */
+  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }

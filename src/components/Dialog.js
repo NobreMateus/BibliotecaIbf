@@ -8,7 +8,6 @@ class Dialog extends Component {
     render() {
 
         let livro = this.props.props;
-        console.log(livro);
         let dialog = (
             <div className='modal-container'>
                 <div className='dialog'>

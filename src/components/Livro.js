@@ -13,7 +13,6 @@ export default class Livro extends Component{
 
     closeModal(){
         this.setState({isOpen:false})
-        console.log(this.state['isOpen']+"teste");
     }
 
     render(){

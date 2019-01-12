@@ -17,7 +17,8 @@ class App extends Component {
       qLivros:15
     }
     document.addEventListener('scroll', ()=>{
-      if(window.scrollY + window.innerHeight === document.body.clientHeight){
+      if(window.scrollY + window.innerHeight >= document.body.clientHeight - 200){
+        console.log(document.body.clientHeight)
         this.carregaMais();
       }
     })
@@ -36,9 +37,11 @@ class App extends Component {
         }
       } 
       this._allBooks = livrosArray; 
+      
       this.setState({
-        livros: livrosArray.slice(0,this.state['qLivros'])
+        livros: this._allBooks//.slice(0,this.state['qLivros'])
       })
+    
     });
     
   }
@@ -59,14 +62,13 @@ class App extends Component {
 
         </header>
         <div className="App-body">
-          <Livros livros={this._allBooks.slice(0,this.state['qLivros'])}/>
+          <Livros livros={this.state['livros'].slice(0,this.state['qLivros'])}/>
         </div>
       </div>
     );
   }
 
   carregaMais(){
-    console.log(this.state['qLivros']);
     if(this.state['qLivros']<this._allBooks.length)
       this.setState({
         qLivros: this.state['qLivros'] + 10
@@ -74,17 +76,19 @@ class App extends Component {
   }
   
   pesquisaChange(text){
-    console.log(text);
     let foundBooks = this._allBooks.filter(
-      (t) => this.removeAcento(t['titulo'].toLowerCase())
-      .includes(this.removeAcento(text.toLowerCase())) ||
-      this.removeAcento(t['autor'][0].toLowerCase())
-      .includes(this.removeAcento(text.toLowerCase()))
+      (t) => 
+        this.removeAcento(t['titulo'])
+        .includes(this.removeAcento(text))
+      // ||
+      // this.removeAcento(t['autor'].toLowerCase())
+      // .includes(this.removeAcento(text.toLowerCase()))
     );
 
     this.setState({
       pesquisa:text,
-      livros: foundBooks
+      livros: foundBooks,
+      qLivros:15
     });
   }
 
