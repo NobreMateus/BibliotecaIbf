@@ -6,9 +6,9 @@ import back from '../icone-voltar.png';
 class Contato extends Component {
     
     sgMail = require('@sendgrid/mail');
-
     constructor(){
         super();
+        console.log(this.sgMail.MailService);
         this.state = {
             nome: '',
             email: '',
@@ -22,9 +22,11 @@ class Contato extends Component {
     render(){
         return(
             <div className="contato-container">
-                <NavLink to="/" className={"App-link"}>
-                    <div className="btn-volta"><img alt='' src={back} /></div>
-                </NavLink>
+                <div className="volta-container">
+                    <NavLink to="/" className={"App-link"}>
+                        <div className="btn-volta"><img alt='' src={back} /></div>
+                    </NavLink>
+                </div>
                 <div className="contato-title">Contato</div>
                 <div className="contato-form">
                     <div className="contato-info">

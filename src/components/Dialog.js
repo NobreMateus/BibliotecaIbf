@@ -26,7 +26,8 @@ class Dialog extends Component {
                         <span><img alt='' width='200px' src={livro.imgURL} /></span>
                         <span>
                             {livro.titulo} <br />
-                            {livro.autor} <br /><br />
+                            {livro.autor}  <br />
+                            {livro.paginas} páginas <br /><br />
                             {livro.descricao} <br />
                         </span>
                     </div>

@@ -79,9 +79,9 @@ class App extends Component {
       (t) => 
         this.removeAcento(t['titulo'])
         .includes(this.removeAcento(text))
-      // ||
-      // this.removeAcento(t['autor'].toLowerCase())
-      // .includes(this.removeAcento(text.toLowerCase()))
+      ||
+      this.removeAcento(t['autor'].toLowerCase())
+      .includes(this.removeAcento(text.toLowerCase()))
     );
 
     this.setState({

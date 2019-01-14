@@ -64,7 +64,7 @@
     text-align: center;
     width: 90%;
     color: white;
-    font-size:100px;
+    font-size:90px;
 }
 
 .input-text{
@@ -132,13 +132,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80px;
+    width: 100%;
     height: 80px;
-    position: fixed;
-    color:white;
-    top:0;
-    left: 0;
-    font-size:48px;
+    /* position: fixed; */
+}
+
+.volta-container{
+    display: flex;
+    width: 90%;
+    align-items: flex-start;
 }
 
 @media(max-width:800px){

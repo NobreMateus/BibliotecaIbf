@@ -5,6 +5,7 @@
     flex-direction: column;
     width: 100%;
     cursor: pointer;
+    height: 290px;
 }
 
 .capa{
@@ -17,6 +18,7 @@
 .title{
     font-size: 18px;
     color: #353535;
+    width: 95%;
 }
 
 .autor{
