@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import './css/add-style.css';
 import { NavLink } from 'react-router-dom';
 import back from '../icone-voltar.png';
+import * as firebase from 'firebase';
 
 class Contato extends Component {
     
-    sgMail = require('@sendgrid/mail');
+    _saving = false;
+
     constructor(){
         super();
-        console.log(this.sgMail.MailService);
         this.state = {
             nome: '',
             email: '',
@@ -16,7 +17,6 @@ class Contato extends Component {
             mensagem: ''
         }
         
-        this.sgMail.setApiKey('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');
     }
 
     render(){
@@ -46,24 +46,32 @@ class Contato extends Component {
     }
 
     enviaEmail(){
-        console.log("ENVIANDO");
-        const msg = {
-            to: 'mateusnobref@gmail.com',
-            from: this.state['email'],
-            subject: this.state['assunto'],
-            text: this.state['mensagem'],
-            html: this.state['mensagem']+'<br /><strong>'+ this.state['nome']+'</strong>',
-          };
-         this.sgMail.send(msg).then(()=>{
-            this.setState({
-                nome: '',
-                email: '',
-                assunto: '',
-                mensagem: '' 
-            })
-            alert('E-mail enviado com sucesso!');
-         }).catch(a=>alert('Falha ao enviar E-mail'));
+        let date = new Date().getTime();
+        let msg = this.state;
+    
+        const rootRef = firebase.database().ref();
+        if(!this._saving){
+            this._saving = true;
+            rootRef.child('Emails').update({
+                [date]:{
+                    nome: msg['nome'],
+                    email: msg['email'],
+                    assunto: msg['assunto'],
+                    mensagem: msg['mensagem']   
+                }
+            }, ()=>this.succesSave());
+        }
+    }
 
+    succesSave(){
+        this.setState({
+            nome: '',
+            email: '',
+            assunto: '',
+            mensagem: ''
+        });
+        this._saving = false;
+        alert('Mensagem enviada com sucesso!');
     }
 
     nomeChange(text){
