@@ -18,7 +18,6 @@ class App extends Component {
     }
     document.addEventListener('scroll', ()=>{
       if(window.scrollY + window.innerHeight >= document.body.clientHeight - 200){
-        console.log(document.body.clientHeight)
         this.carregaMais();
       }
     })

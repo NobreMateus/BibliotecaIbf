@@ -121,7 +121,6 @@
     border-radius: 20px;
     border: none;
     padding: 15px;
-    padding-left: 25px;
     font-size: 20px;
 }
 
@@ -146,13 +145,19 @@
     .contato-form{
         flex-direction: column;
     }
-
+    .contato-info{
+        width: 90%;
+    }
+    .msg-info{
+        width: 90%
+    }
     .textarea-text{
         margin-bottom: 15px;
     }
     .envia-contato{
         width: 45%;
     }
+
     .contato-title{
         font-size:70px;
     }

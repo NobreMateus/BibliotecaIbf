@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import './css/add-style.css';
 import { NavLink } from 'react-router-dom';
+import back from '../icone-voltar.png';
 
 class Contato extends Component {
     
-    sgMail = require('@sendgrid/mail');    
-    
+    sgMail = require('@sendgrid/mail');
+
     constructor(){
         super();
         this.state = {
@@ -22,7 +23,7 @@ class Contato extends Component {
         return(
             <div className="contato-container">
                 <NavLink to="/" className={"App-link"}>
-                    <div className="btn-volta">X</div>
+                    <div className="btn-volta"><img alt='' src={back} /></div>
                 </NavLink>
                 <div className="contato-title">Contato</div>
                 <div className="contato-form">
