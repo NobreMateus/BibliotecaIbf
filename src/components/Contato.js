@@ -16,6 +16,7 @@ class Contato extends Component {
             assunto: '',
             mensagem: ''
         }
+        console.log(this.props);
         
     }
 
