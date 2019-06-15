@@ -1,3 +1,12 @@
+# Biblioteca IBF
+
+## Resumo
+
+Projeto criado em React e Firebase para exibir os livros disponíveis na biblioteca da Igreja Batista Filadélfia, bem como suas principais informações.
+
+O site pode ser acessado através do link: www.bibliotecaibf.com.br
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
