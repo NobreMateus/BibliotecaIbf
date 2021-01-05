@@ -5,7 +5,7 @@
   "dependencies": {
     "@atlaskit/field-text": "^7.0.19",
     "@sendgrid/mail": "^6.3.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "elemental": "^0.6.1",
     "firebase": "^5.7.2",
     "react": "^16.7.0",
